@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="541.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep7.sms_lite.controller.MainFormController">
    <children>
       <Label layoutX="72.0" layoutY="4.0" text="Student Management System">
@@ -17,7 +16,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtID" layoutX="15.0" layoutY="38.0" prefHeight="29.0" prefWidth="335.0" promptText="ID" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <TextField fx:id="txtID" disable="true" editable="false" layoutX="15.0" layoutY="38.0" prefHeight="29.0" prefWidth="335.0" promptText="ID" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -32,7 +31,7 @@
             <Font size="15.0" />
          </font>
       </TextField>
-      <Button layoutX="358.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnSave_OnAction" prefHeight="29.0" prefWidth="64.0" text="Save">
+      <Button fx:id="btnSave" layoutX="358.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnSave_OnAction" prefHeight="29.0" prefWidth="64.0" text="Save">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
