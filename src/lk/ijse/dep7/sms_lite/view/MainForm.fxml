@@ -27,7 +27,7 @@
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtPhone" layoutX="15.0" layoutY="116.0" onAction="#txtPhone_OnAction" promptText="Phone" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <TextField fx:id="txtPhone" layoutX="15.0" layoutY="116.0" onAction="#txtPhone_OnAction" promptText="Phone (xxx-xxxxxxx)" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font size="15.0" />
          </font>
