@@ -120,6 +120,12 @@ public class MainFormController {
         String name = txtName.getText();
         String phone = txtPhone.getText();
 
+        if (name.trim().isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Invalid Name").show();
+            txtName.requestFocus();
+            return;
+        }
+
         if (!phone.matches("(\\d{3}-\\d{7})")) {
             new Alert(Alert.AlertType.ERROR, "Invalid contact number").show();
             txtPhone.requestFocus();
