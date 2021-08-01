@@ -46,6 +46,6 @@
             <TableColumn prefWidth="126.0" text="Delete" />
         </columns>
       </TableView>
-      <Button layoutX="374.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnNew_OnAction" prefHeight="26.0" prefWidth="72.0" text="NEW" />
+      <Button fx:id="btnNew" layoutX="374.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnNew_OnAction" prefHeight="26.0" prefWidth="72.0" text="NEW" />
    </children>
 </AnchorPane>

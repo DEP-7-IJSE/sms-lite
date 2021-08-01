@@ -14,6 +14,7 @@ public class MainFormController {
     public TextField txtName;
     public TextField txtPhone;
     public Button btnSave;
+    public Button btnNew;
     public ListView<String> lstContact;
     public TableView<StudentTM> tblStudents;
     Connection connection;
@@ -163,20 +164,27 @@ public class MainFormController {
                 }
                 new Alert(Alert.AlertType.INFORMATION, "Saved Successfully").show();
             }else {
-                updateContactStm.setObject(1,phone);
-                updateContactStm.setObject(2,id);
-                updateContactStm.setObject(3,lstContact.getSelectionModel().getSelectedItem());
+                Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure that you want to update?", ButtonType.NO, ButtonType.YES).showAndWait();
 
-                if (updateContactStm.executeUpdate() != 1){
-                    new Alert(Alert.AlertType.ERROR,"Update failure, try again").show();
+                if (confirm.get().equals(ButtonType.YES)) {
+                    updateContactStm.setObject(1,phone);
+                    updateContactStm.setObject(2,id);
+                    updateContactStm.setObject(3,lstContact.getSelectionModel().getSelectedItem());
+
+                    if (updateContactStm.executeUpdate() != 1){
+                        new Alert(Alert.AlertType.ERROR,"Update failure, try again").show();
+                    }
+                    new Alert(Alert.AlertType.INFORMATION,"Saved Successfully").show();
+                    lstContact.getItems().remove(lstContact.getSelectionModel().getSelectedItem());
                 }
-                new Alert(Alert.AlertType.INFORMATION,"Saved Successfully").show();
-                lstContact.getItems().remove(lstContact.getSelectionModel().getSelectedItem());
             }
 
             if (!studentExist) {
                 tblStudents.getItems().add(new StudentTM(id, name));
                 txtID.setText(String.format("S%03d", (++count)));
+            }else {
+                txtID.setText(String.format("S%03d", (count)));
+                txtName.requestFocus();
             }
             lstContact.getItems().add(phone);
             txtName.clear();
@@ -202,15 +210,18 @@ public class MainFormController {
                 if (all) {
                     deletedRaws = connection.createStatement().executeUpdate("DELETE FROM contact WHERE student_id='" + txtID.getText() + "'");
                     lstContact.getItems().clear();
+                    txtName.clear();
                 } else {
                     deletedRaws = connection.createStatement().executeUpdate("DELETE FROM contact WHERE student_id='" + txtID.getText() + "' AND phone = '" + lstContact.getSelectionModel().getSelectedItem() + "'");
                     lstContact.getItems().remove(lstContact.getSelectionModel().getSelectedItem());
                 }
-                if (deletedRaws != 0) {
+                if (deletedRaws >= 1) {
                     new Alert(Alert.AlertType.INFORMATION, "Deleted").show();
-                    txtName.clear();
                     txtPhone.clear();
+                    txtID.setText(String.format("S%03d", (count)));
+                    return;
                 }
+                new Alert(Alert.AlertType.ERROR,"Deletion Failed").show();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -218,6 +229,7 @@ public class MainFormController {
     }
 
     public void btnNew_OnAction(ActionEvent actionEvent) {
+        btnSave.setText("Save");
         txtName.clear();
         txtPhone.clear();
         lstContact.getItems().clear();
