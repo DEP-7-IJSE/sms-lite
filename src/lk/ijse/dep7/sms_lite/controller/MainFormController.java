@@ -21,6 +21,7 @@ public class MainFormController {
     PreparedStatement saveContactStm;
     PreparedStatement searchStudentStm;
     PreparedStatement searchContactStm;
+    PreparedStatement updateContactStm;
     int count = 0;
 
     public void initialize() {
@@ -57,6 +58,7 @@ public class MainFormController {
             saveContactStm = connection.prepareStatement("INSERT INTO contact VALUES (?,?)");
             searchStudentStm = connection.prepareStatement("SELECT * FROM student WHERE id = ?");
             searchContactStm = connection.prepareStatement("SELECT * FROM contact WHERE student_id = ?");
+            updateContactStm = connection.prepareStatement("UPDATE contact SET phone = ? WHERE student_id=? AND phone=?");
             Statement stm = connection.createStatement();
             ResultSet rst = stm.executeQuery("SELECT * FROM student");
             while (rst.next()) {
@@ -87,6 +89,13 @@ public class MainFormController {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        lstContact.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                txtPhone.setText(newValue);
+                btnSave.setText("Update");
             }
         });
 
@@ -145,12 +154,25 @@ public class MainFormController {
                 }
             }
 
-            saveContactStm.setObject(1, id);
-            saveContactStm.setObject(2, phone);
-            if (saveContactStm.executeUpdate() != 1) {
-                new Alert(Alert.AlertType.ERROR, "Student save failed, try again").show();
+            if (btnSave.getText().equalsIgnoreCase("Save")) {
+                saveContactStm.setObject(1, id);
+                saveContactStm.setObject(2, phone);
+
+                if (saveContactStm.executeUpdate() != 1) {
+                    new Alert(Alert.AlertType.ERROR, "save failed, try again").show();
+                }
+                new Alert(Alert.AlertType.INFORMATION, "Saved Successfully").show();
+            }else {
+                updateContactStm.setObject(1,phone);
+                updateContactStm.setObject(2,id);
+                updateContactStm.setObject(3,lstContact.getSelectionModel().getSelectedItem());
+
+                if (updateContactStm.executeUpdate() != 1){
+                    new Alert(Alert.AlertType.ERROR,"Update failure, try again").show();
+                }
+                new Alert(Alert.AlertType.INFORMATION,"Saved Successfully").show();
+                lstContact.getItems().remove(lstContact.getSelectionModel().getSelectedItem());
             }
-            new Alert(Alert.AlertType.INFORMATION, "Saved Successfully").show();
 
             if (!studentExist) {
                 tblStudents.getItems().add(new StudentTM(id, name));

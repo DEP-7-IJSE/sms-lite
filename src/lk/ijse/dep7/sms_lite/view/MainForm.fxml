@@ -31,7 +31,7 @@
             <Font size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="btnSave" layoutX="358.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnSave_OnAction" prefHeight="29.0" prefWidth="64.0" text="Save">
+      <Button fx:id="btnSave" layoutX="361.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnSave_OnAction" prefHeight="29.0" prefWidth="85.0" text="Save">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
