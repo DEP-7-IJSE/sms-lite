@@ -194,4 +194,11 @@ public class MainFormController {
             e.printStackTrace();
         }
     }
+
+    public void btnNew_OnAction(ActionEvent actionEvent) {
+        txtName.clear();
+        txtPhone.clear();
+        lstContact.getItems().clear();
+        txtID.setText(String.format("S%03d", (count)));
+    }
 }
